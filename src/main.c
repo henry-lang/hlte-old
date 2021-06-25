@@ -1,12 +1,17 @@
 #include <stdio.h>
+
 #include "terminal/terminal.h"
 #include "terminal/terminal_formatting.h"
+#include "display/display_buffer.h"
+
+DisplayBuffer* buffer;
 
 int main() {
-    terminal_clear(100);
-    terminal_set_colors(91, 100);
     TerminalDimensions dim = terminal_get_dimensions();
-    printf("%zu %d\n", dim.x, dim.y);
+    buffer = display_buffer_init(dim.y * dim.x);
+    display_buffer_render(buffer);
+
+    display_buffer_free(buffer);
 
     return 0;
 }

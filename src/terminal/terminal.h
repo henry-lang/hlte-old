@@ -1,7 +1,3 @@
-//
-// Created by henry on 6/24/21.
-//
-
 #ifndef HLTE_TERMINAL_H
 #define HLTE_TERMINAL_H
 
