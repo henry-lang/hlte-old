@@ -3,4 +3,7 @@ project(hlte C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(hlte src/main.c src/terminal/terminal.c src/terminal/terminal.h src/terminal/terminal_formatting.h src/display/display_buffer.c src/display/display_buffer.h src/display/display_cell.h)
+add_executable(hlte src/main.c src/editor/editor.c src/editor/editor.h src/editor/cursor.h)
+
+find_package(Curses REQUIRED Curses)
+target_link_libraries(${PROJECT_NAME} PRIVATE ${CURSES_LIBRARIES})
