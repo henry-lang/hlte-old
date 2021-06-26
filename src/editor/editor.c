@@ -1,21 +1,16 @@
 #include "editor.h"
+#include "../terminal/terminal.h"
 
 void editor_init() {
-    initscr();
-    start_color();
-    raw();
-    refresh();
-    noecho();
-    keypad(stdscr, true);
+
 }
 
 void editor_display() {
-    clear();
-    move(5, 5);
-    printw("%s", "Hello, world!");
-    refresh();
+    terminal_clear();
+    terminal_display(5, 5, "Hello, world!");
+    terminal_flush();
 }
 
 void editor_get_input() {
-    getch();
+    terminal_get_input();
 }
