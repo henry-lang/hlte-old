@@ -13,6 +13,8 @@ add_executable(
         src/terminal/terminal.h
         src/data_structures/string.c
         src/data_structures/string.h
+        src/data_structures/list.c
+        src/data_structures/list.h
 )
 
 find_package(Curses REQUIRED Curses)

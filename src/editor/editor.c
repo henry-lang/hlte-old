@@ -1,8 +1,11 @@
+#include <stdlib.h>
+
 #include "editor.h"
 #include "../terminal/terminal.h"
 
 Editor* editor_init() {
-
+    Editor* editor = malloc(sizeof(Editor));
+    editor->
 }
 
 void editor_display(Editor* editor) {
