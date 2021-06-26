@@ -1,19 +1,43 @@
 #include <stdlib.h>
+#include <stdbool.h>
 
 #include "editor.h"
-#include "../terminal/terminal.h"
+#include "string.h"
 
-Editor* editor_init() {
+#include "../terminal/terminal.h"
+#include "../terminal/input.h"
+
+Editor* editor_init(char* file_path) {
     Editor* editor = malloc(sizeof(Editor));
-    editor->
+    editor->open = true;
+    editor->file_path = string_init(file_path);
+    editor->lines = list_init();
+    // We don't care if the file path isn't null since I haven't implemented file loading yet...
+    list_push(editor->lines, string_init(""));
+
+    return editor;
 }
 
 void editor_display(Editor* editor) {
     terminal_clear();
-    terminal_display(5, 5, "Hello, world!");
+
+    int top = editor->scroll_y;
+    int bottom = top + terminal_get_height() - 1;
+    for(int line = top; line < bottom; line++) {
+        terminal_display(line - editor->scroll_y + 1, 0, "%3d", line + 1);
+    }
+
     terminal_flush();
 }
 
 void editor_get_input(Editor* editor) {
-    terminal_get_input();
+    Input input = terminal_get_input();
+
+}
+
+void editor_free(Editor* editor) {
+    list_clear_free(editor->lines, (void*) string_free);
+    string_free(editor->file_path);
+    list_free(editor->lines);
+    free(editor);
 }

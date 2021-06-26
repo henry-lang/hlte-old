@@ -15,7 +15,7 @@ add_executable(
         src/data_structures/string.h
         src/data_structures/list.c
         src/data_structures/list.h
-)
+        src/terminal/input.h src/globals.h)
 
 find_package(Curses REQUIRED Curses)
 target_link_libraries(${PROJECT_NAME} PRIVATE ${CURSES_LIBRARIES})
