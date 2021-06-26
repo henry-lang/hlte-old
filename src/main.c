@@ -4,11 +4,13 @@
 #include "editor/editor.h"
 #include "terminal/terminal.h"
 
-bool editing = true;
+bool running = true;
 
 int main() {
+
+
     terminal_init();
-    while(editing) {
+    while(running) {
         editor_display();
         editor_get_input();
     }

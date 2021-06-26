@@ -14,7 +14,7 @@ typedef struct {
     int scroll_y, scroll_x;
 } Editor;
 
-void editor_init();
+void editor_init(Editor* editor);
 void editor_display();
 void editor_get_input();
 

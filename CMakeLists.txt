@@ -11,10 +11,8 @@ add_executable(
         src/editor/cursor.h
         src/terminal/terminal.c
         src/terminal/terminal.h
-        src/file/file_context.c
-        src/file/file_context.h
-        src/file/file_line.c
-        src/file/file_line.h
+        src/data_structures/string.c
+        src/data_structures/string.h
 )
 
 find_package(Curses REQUIRED Curses)
