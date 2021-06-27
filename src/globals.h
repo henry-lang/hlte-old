@@ -3,6 +3,6 @@
 
 #include "editor/editor.h"
 
-extern Editor* editor;
+extern Editor* MAIN_EDITOR; // Global editor, later will be replaced with list of editors
 
 #endif //HLTE_GLOBALS_H

@@ -31,8 +31,11 @@ void editor_display(Editor* editor) {
 }
 
 void editor_get_input(Editor* editor) {
-    Input input = terminal_get_input();
+    Input input = terminal_get_input(editor);
+}
 
+void editor_close(Editor* editor) {
+    editor->open = false;
 }
 
 void editor_free(Editor* editor) {

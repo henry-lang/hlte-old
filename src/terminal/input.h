@@ -4,7 +4,8 @@
 typedef enum {
     CHARACTER,
     BACKSPACE,
-    NEWLINE
+    NEWLINE,
+    MOVEMENT
 } InputType;
 
 typedef struct {

@@ -1,3 +1,3 @@
 typedef struct {
-    int pos_x, pos_y;
+    int y, x;
 } Cursor;

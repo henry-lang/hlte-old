@@ -13,7 +13,7 @@ void terminal_end();
 void terminal_display(int y, int x, char* format, ...);
 void terminal_flush();
 
-Input terminal_get_input();
+Input terminal_get_input(Editor* editor);
 int terminal_get_width();
 int terminal_get_height();
 

@@ -6,19 +6,19 @@
 #include "editor/editor.h"
 #include "terminal/terminal.h"
 
-Editor* editor;
+Editor* MAIN_EDITOR;
 
 int main() {
     terminal_init();
 
-    editor = editor_init("");
+    MAIN_EDITOR = editor_init("");
 
-    while(editor->open) {
-        editor_display(editor);
-        editor_get_input(editor);
+    while(MAIN_EDITOR->open) {
+        editor_display(MAIN_EDITOR);
+        editor_get_input(MAIN_EDITOR);
     }
 
-    editor_free(editor);
+    editor_free(MAIN_EDITOR);
     terminal_end();
 
     return 0;

@@ -20,6 +20,7 @@ typedef struct {
 Editor* editor_init();
 void editor_display(Editor* editor);
 void editor_get_input(Editor* editor);
+void editor_close(Editor* editor);
 void editor_free(Editor* editor);
 
 #endif //HLTE_EDITOR_H
