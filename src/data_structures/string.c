@@ -21,6 +21,20 @@ void string_set(String* string, char* source) {
     strcpy(string->data, source);
 }
 
+void string_insert(String* string, char* to_insert, int index) {
+    string->length = string->length + strlen(to_insert);
+    char* new = realloc(string->data, sizeof(char) * string->length + 1);
+    if(new == NULL) return;
+    memcpy(string->data, new);7
+    strcat(buffer, to_insert);
+
+    memcpy(string->data, );
+}
+
+void string_append(String* string, char* to_append) {
+
+}
+
 void string_free(String* string) {
     free(string->data);
     free(string);
