@@ -31,6 +31,10 @@ void terminal_display(int y, int x, char* format, ...) {
     va_end(args);
 }
 
+void terminal_move_cursor(int y, int x) {
+    move(y, x);
+}
+
 void terminal_flush() {
     refresh();
 }
@@ -44,8 +48,12 @@ Input terminal_get_input(Editor* editor) {
     } else if(raw_key == 127 || raw_key == KEY_BACKSPACE) {
         input.type = BACKSPACE;
     } else if(raw_key == KEY_UP || raw_key == KEY_DOWN || raw_key == KEY_LEFT || raw_key == KEY_RIGHT) {
+        input.type = MOVEMENT;
+    } else if(raw_key == 10 || raw_key == KEY_ENTER) {
         input.type = NEWLINE;
-    } else if(raw_key == 10 || raw_key == KEY_ENTER)
+    } else if(raw_key == 3) {
+        input.type = KEYBIND;
+    }
 
     input.key = raw_key;
     input.y = editor->cursor.y;

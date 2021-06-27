@@ -11,6 +11,7 @@ void terminal_init();
 void terminal_clear();
 void terminal_end();
 void terminal_display(int y, int x, char* format, ...);
+void terminal_move_cursor(int y, int x);
 void terminal_flush();
 
 Input terminal_get_input(Editor* editor);

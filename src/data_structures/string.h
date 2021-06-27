@@ -10,6 +10,8 @@ typedef struct {
 
 String* string_init(char* source);
 void string_set(String* string, char* source);
+void string_insert(String* string, char* to_insert);
+void string_append(String* string, char* to_append);
 void string_free(String* string);
 
 #endif //HLTE_STRING_H

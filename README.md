@@ -1,2 +1,4 @@
 # hlte
-A text editor written in C
+### A terminal text editor written in C. (Uses ncurses.)
+
+Work in progress.
