@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdbool.h>
+#include <stdio.h>
 
 #include "editor.h"
 #include "string.h"
@@ -23,12 +24,14 @@ void editor_display(Editor* editor) {
     terminal_clear();
 
     int top = editor->scroll_y;
-    int bottom = top + terminal_get_height() - 1;
+    int bottom = 1;
+            //top + terminal_get_height() - 1;
     for(int line = top; line < bottom; line++) {
         terminal_display(line - editor->scroll_y + 1, 0, "%3d", line + 1);
+        terminal_display(line - editor->scroll_y + 1, 4, editor_get_line(editor, line)->data);
     }
 
-    terminal_move_cursor(editor->cursor.y, editor->cursor.x);
+    terminal_move_cursor(editor->cursor.y, editor->cursor.x + 4);
 
     terminal_flush();
 }
@@ -38,9 +41,13 @@ void editor_get_input(Editor* editor) {
 
     switch(input.type) {
         case CHARACTER: {
+            String* line = editor_get_line(editor, 0);
+            string_append(line, &(input.key));
+
 
             break;
         }
+
         case BACKSPACE: {
 
 
@@ -68,6 +75,12 @@ void editor_get_input(Editor* editor) {
             break;
         }
     }
+}
+
+String* editor_get_line(Editor* editor, int line_num) {
+    if(line_num < 0 || line_num >= list_length(editor->lines)) return NULL;
+
+    return list_get(editor->lines, line_num);
 }
 
 void editor_close(Editor* editor) {

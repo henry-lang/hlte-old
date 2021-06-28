@@ -18,9 +18,13 @@ typedef struct {
 } Editor;
 
 Editor* editor_init();
+
 void editor_display(Editor* editor);
 void editor_get_input(Editor* editor);
-void editor_close(Editor* editor);
+
+String* editor_get_line(Editor* editor, int line_num);
+
 void editor_free(Editor* editor);
+void editor_close(Editor* editor);
 
 #endif //HLTE_EDITOR_H
