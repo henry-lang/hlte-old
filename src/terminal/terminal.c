@@ -51,8 +51,8 @@ Input terminal_get_input(Editor* editor) {
         input.type = MOVEMENT;
     } else if(raw_key == 10 || raw_key == KEY_ENTER) {
         input.type = NEWLINE;
-    } else if(raw_key == 3) {
-        input.type = KEYBIND;
+    } else {
+        input.type = KEYBIND; KEY_COPY;
     }
 
     input.key = raw_key;

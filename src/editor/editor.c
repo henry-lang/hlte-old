@@ -28,10 +28,10 @@ void editor_display(Editor* editor) {
             //top + terminal_get_height() - 1;
     for(int line = top; line < bottom; line++) {
         terminal_display(line - editor->scroll_y + 1, 0, "%3d", line + 1);
-        terminal_display(line - editor->scroll_y + 1, 4, editor_get_line(editor, line)->data);
+        terminal_display(line - editor->scroll_y + 1, 4, "%s", editor_get_line(editor, line)->data);
     }
 
-    terminal_move_cursor(editor->cursor.y, editor->cursor.x + 4);
+    terminal_move_cursor(1, editor_get_line(editor, 0)->length + 4);
 
     terminal_flush();
 }
