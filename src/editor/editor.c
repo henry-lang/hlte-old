@@ -31,7 +31,7 @@ void editor_display(Editor* editor) {
         terminal_display(line - editor->scroll_y + 1, 4, "%s", editor_get_line(editor, line)->data);
     }
 
-    terminal_move_cursor(1, editor_get_line(editor, 0)->length + 4);
+    terminal_move_cursor(editor->scroll_y, editor->scroll_x);
 
     terminal_flush();
 }
