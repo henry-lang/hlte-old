@@ -9,7 +9,7 @@
 Editor* MAIN_EDITOR;
 
 int main() {
-    terminal_init();
+    if(!terminal_init()) return 1;
 
     MAIN_EDITOR = editor_init("");
 

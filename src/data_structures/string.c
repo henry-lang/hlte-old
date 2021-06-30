@@ -1,4 +1,5 @@
 #include <string.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 
@@ -11,7 +12,8 @@ String* string_init(const char* source) {
     string->length = source_length;
     string->capacity = source_length + 1;
     string->data = malloc(sizeof(char) * string->capacity);
-    strcpy(string->data, source);
+    memcpy(string->data, source, string->length);
+    string->data[string->length] = '\0';
 
     return string;
 }
@@ -25,7 +27,7 @@ void string_set(String* string, const char* source) {
     strcpy(string->data, source);
 }
 
-bool string_insert(String* string, const char* to_insert, const int index) {
+bool string_insert(String* string, const char* to_insert, const size_t index) {
     size_t added_length = strlen(to_insert);
     size_t needed_size = string->length + added_length + 1;
 
@@ -33,9 +35,10 @@ bool string_insert(String* string, const char* to_insert, const int index) {
         if(!string_realloc(string, needed_size)) return false;
     }
 
-    // ACTUALLY INSERT THE STRING
+    string->length += added_length;
 
-    string->length = string->length + strlen(to_insert);
+    memmove(&string->data[index + added_length], &string->data[index], string->length - index + 1);
+    memcpy(&string->data[index], to_insert, added_length);
 
     return true;
 }
@@ -48,11 +51,27 @@ bool string_append(String* string, const char* to_append) {
         if(!string_realloc(string, needed_size)) return false;
     }
 
+    string->length += added_length;
+
     strcat(string->data, to_append);
 
-    string->length = string->length + strlen(to_append);
-
     return true;
+}
+
+String* string_substring(String* string, size_t start, size_t end) {
+    size_t length = end - start + 1;
+
+    char new[length + 1]; // We are adding two because we need one extra because of an off by one issue and another because of the null terminator.
+    strncpy(new, &string->data[start], length);
+    new[length] = '\0';
+
+    String* new_string = string_init(new); // Make sure you free the string returned from this function since it's heap allocated.
+    return new_string;
+}
+
+void string_remove(String* string, const size_t index) {
+    memmove(&string->data[index], &string->data[index + 1], string->length - index + 4);
+    string->length--;
 }
 
 bool string_realloc(String* string, const size_t size) {

@@ -7,7 +7,7 @@
 
 #include "input.h"
 
-void terminal_init();
+bool terminal_init();
 void terminal_clear();
 void terminal_end();
 void terminal_display(int y, int x, char* format, ...);

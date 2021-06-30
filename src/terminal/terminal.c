@@ -6,13 +6,19 @@
 #include "terminal.h"
 #include "input.h"
 
-void terminal_init() {
+bool terminal_init() {
     initscr();
+    if (has_colors() == FALSE) {
+        endwin();
+        printf("Your terminal does not support color.\n");
+        return false;
+    }
     start_color();
     raw();
     refresh();
     noecho();
     keypad(stdscr, true);
+    return true;
 }
 
 void terminal_clear() {

@@ -31,7 +31,7 @@ void editor_display(Editor* editor) {
         terminal_display(line - editor->scroll_y + 1, 4, "%s", editor_get_line(editor, line)->data);
     }
 
-    terminal_move_cursor(editor->scroll_y, editor->scroll_x);
+    terminal_move_cursor(editor->scroll_y + 1, editor->scroll_x + 4);
 
     terminal_flush();
 }
@@ -44,7 +44,6 @@ void editor_get_input(Editor* editor) {
             String* line = editor_get_line(editor, 0);
             string_append(line, &(input.key));
 
-
             break;
         }
 
@@ -54,7 +53,8 @@ void editor_get_input(Editor* editor) {
             break;
         }
         case NEWLINE: {
-
+            String* current_line = editor_get_line(editor, editor->cursor.y);
+            String* new = string_substring(current_line, editor->cursor.x, current_line->length);
 
             break;
         }
