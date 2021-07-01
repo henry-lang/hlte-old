@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.19)
 project(hlte C)
 
 set(CMAKE_C_STANDARD 99)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY /bin/)
+#set(CMAKE_RUNTIME_OUTPUT_DIRECTORY /bin/)
 
 add_executable(
         hlte

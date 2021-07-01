@@ -21,6 +21,8 @@ String* string_substring(String* string, size_t start, size_t end);
 
 void string_remove(String* string, size_t index);
 
+void string_remove(String* string, size_t index);
+
 bool string_realloc(String* string, size_t size);
 
 void string_free(String* string);

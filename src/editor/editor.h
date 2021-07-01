@@ -22,9 +22,12 @@ Editor* editor_init();
 void editor_display(Editor* editor);
 void editor_get_input(Editor* editor);
 
-String* editor_get_line(Editor* editor, int line_num);
+String* editor_get_line(Editor* editor, size_t line_num);
 
-void editor_free(Editor* editor);
+void editor_line_create(Editor* editor, String* string);
+void editor_line_remove(Editor* editor, size_t line_num);
+
 void editor_close(Editor* editor);
+void editor_free(Editor* editor);
 
 #endif //HLTE_EDITOR_H

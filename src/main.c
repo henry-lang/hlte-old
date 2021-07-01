@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-
 #include "globals.h"
 #include "editor/editor.h"
 #include "terminal/terminal.h"
