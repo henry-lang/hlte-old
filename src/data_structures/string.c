@@ -11,84 +11,61 @@ String* string_init(const char* source) {
     String* string = malloc(sizeof(String));
     string->length = source_length;
     string->capacity = source_length + 1;
-    string->data = malloc(sizeof(char) * string->capacity);
+    string->data = malloc(string->capacity);
     memcpy(string->data, source, string->length);
     string->data[string->length] = '\0';
 
     return string;
 }
 
-void string_set(String* string, const char* source) {
-    string->length = strlen(source);
-    char* new = realloc(string->data, sizeof(char) * (string->length + 1));
-    if(new == NULL) return;
-    string->data = new;
-
-    strcpy(string->data, source);
-}
-
-bool string_insert(String* string, const char* to_insert, const size_t index) {
-    size_t added_length = strlen(to_insert);
-    size_t needed_size = string->length + added_length + 1;
-
-    if(needed_size > string->capacity) {
-        if(!string_realloc(string, needed_size)) return false;
-    }
-
-    string->length += added_length;
-
-    memmove(&string->data[index + added_length], &string->data[index], string->length - index + 1);
-    memcpy(&string->data[index], to_insert, added_length);
-
-    return true;
-}
-
-bool string_append(String* string, const char* to_append) {
-    const size_t added_length = string->length;
-    const size_t needed_size = string->length + added_length + strlen(to_append);
-
-    if(needed_size > string->capacity) {
-        if(!string_realloc(string, needed_size)) return false;
-    }
-
-    string->length += added_length;
-
-    strcat(string->data, to_append);
-
-    return true;
-}
-
-String* string_substring(String* string, size_t start, size_t end) {
-    size_t length = end - start + 1;
-
-    char new[length + 1]; // We are adding two because we need one extra because of an off by one issue and another because of the null terminator.
-    strncpy(new, &string->data[start], length);
-    new[length] = '\0';
-
-    String* new_string = string_init(new); // Make sure you free the string returned from this function since it's heap allocated.
-    return new_string;
-}
-
-void string_remove(String* string, const size_t index) {
-    memmove(&string->data[index], &string->data[index + 1], string->length - index + 4);
-    string->length--;
-}
-
-bool string_realloc(String* string, const size_t size) {
-    size_t new_size = string->capacity;
-    while(new_size < size) {
-        new_size <<= 1;
-    }
-
-    char* new_data = realloc(string->data, sizeof(char) * new_size);
-    if(new_data == NULL) return false;
-
-    string->data = new_data;
-    string->capacity = new_size;
-    return true;
-}
-
 void string_free(String* string) {
     free(string->data);
     free(string);
+}
+
+void string_append(String* string, char to_append) {
+//    if(string->capacity <= ) string_realloc(string);
+//
+//    string->data[string->length] = to_append;
+//    string->length++;
+//    string->data[string->length] = '\0';
+}
+
+void string_insert(String* string, const char* to_insert, size_t index) {
+    size_t added_length = strlen(to_insert);
+    size_t new_length = string->length + added_length;
+
+    if(string->capacity <= new_length + 1) {
+        char* new = malloc(new_length + 1);
+        string->capacity = new_length + 1;
+
+        memcpy(new, string->data, index);
+        memcpy(&new[index + added_length], &string->data[index], string->length - index);
+        free(string->data);
+        string->data = new;
+    } else {
+        memmove(&string->data[index], &string->data[index + added_length], string->length - index);
+    }
+    string->length = new_length;
+    memcpy(&string->data[index], to_insert, added_length);
+    string->data[new_length] = '\0';
+}
+
+void string_remove(String* string, size_t index, size_t length) {
+    memmove(&string->data[index], &string->data[index + length], string->length - index);
+    string->length -= length;
+    string->data[string->length] = '\0';
+}
+
+bool string_has_space(String* string) {
+    return string->capacity - (string->length + 1) > 0;
+}
+
+void string_realloc(String* string) {
+    string->capacity <<= 1;
+
+    char* new = malloc(string->capacity);
+    strcpy(new, string->data);
+    free(string->data);
+    string->data = new;
 }

@@ -11,20 +11,15 @@ typedef struct {
 } String;
 
 String* string_init(const char* source);
-void string_init_alloc(String* string, size_t size);
-void string_set(String* string, const char* source);
-
-bool string_insert(String* string, const char* to_insert, size_t index);
-bool string_append(String* string, const char* to_append);
-
-String* string_substring(String* string, size_t start, size_t end);
-
-void string_remove(String* string, size_t index);
-
-void string_remove(String* string, size_t index);
-
-bool string_realloc(String* string, size_t size);
-
 void string_free(String* string);
+
+//void string_set(String* string, const char* source);
+void string_append(String* string, char to_append);
+void string_insert(String* string, const char* to_insert, size_t index);
+
+void string_remove(String* string, size_t index, size_t length);
+
+bool string_has_space(String* string);
+void string_realloc(String* string);
 
 #endif //HLTE_STRING_H

@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include <ncurses.h>
 
 #include "editor.h"
 #include "string.h"
@@ -16,13 +17,18 @@ Editor* editor_init(char* file_path) {
     editor->lines = list_init();
     editor->scroll_y = editor->scroll_x = 0;
     // We don't care if the file path isn't null since I haven't implemented file loading yet...
-    list_push(editor->lines, string_init(""));
+    for(int i = 0; i < 10; i++) {
+        list_push(editor->lines, string_init("Sample Text! Manipulate me!"));
+    }
+
 
     return editor;
 }
 
 void editor_display(Editor* editor) {
     terminal_clear();
+
+    terminal_display(0, 0, "%d", editor->cursor.x);
 
     int top = editor->scroll_y;
     int bottom = terminal_get_height() - 1;
@@ -46,26 +52,71 @@ void editor_get_input(Editor* editor) {
 
     switch(input.type) {
         case CHARACTER: {
-            string_append(line, (const char *) &(input.key));
+            char new[2];
+            new[0] = (char) input.key;
+            new[1] = '\0';
+
+            string_insert(line, new, editor->cursor.x);
             editor->cursor.x++;
+
             break;
         }
 
         case BACKSPACE: {
-            string_remove(line, editor->cursor.x - 1);
+            if(editor->cursor.x == 0) break;
+
+            string_remove(line, editor->cursor.x, 1);
             editor->cursor.x--;
+
             break;
         }
         case NEWLINE: {
             String* new_line = string_init("");
 //                    string_substring(line, editor->cursor.x, line->length);
-            editor_line_create(editor, new_line);
             editor->cursor.y++;
             editor->cursor.x = 0;
+            editor_line_create(editor, new_line);
+
             break;
         }
         case MOVEMENT: {
+            switch(input.key) {
+                case KEY_UP: {
 
+                    break;
+                }
+
+                case KEY_DOWN: {
+
+                    break;
+                }
+
+                case KEY_LEFT: {
+                    if(editor->cursor.x == 0) {
+                        if(editor->cursor.y == 0) break;
+
+                        editor->cursor.y--;
+                        editor->cursor.x = (int) editor_get_line(editor, editor->cursor.y)->length;
+                    } else {
+                        editor->cursor.x--;
+                    }
+
+                    break;
+                }
+
+                case KEY_RIGHT: {
+                    if(editor->cursor.x == line->length) {
+                        if(editor->cursor.y == list_length(editor->lines) - 1) break;
+
+                        editor->cursor.y++;
+                        editor->cursor.x = 0;
+                    } else {
+                        editor->cursor.x++;
+                    }
+
+                    break;
+                }
+            }
 
             break;
         }
@@ -90,7 +141,7 @@ String* editor_get_line(Editor* editor, size_t line_num) {
 }
 
 void editor_line_create(Editor* editor, String* string) { // Appends a new line into the internal lines list.
-    list_push(editor->lines, string);
+    list_insert(editor->lines, string, editor->cursor.y);
 }
 
 void editor_line_remove(Editor* editor, size_t line_num) {

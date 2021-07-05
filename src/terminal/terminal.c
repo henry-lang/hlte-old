@@ -58,7 +58,7 @@ Input terminal_get_input(Editor* editor) {
     } else if(raw_key == 10 || raw_key == KEY_ENTER) {
         input.type = NEWLINE;
     } else {
-        input.type = KEYBIND; KEY_COPY;
+        input.type = KEYBIND;
     }
 
     input.key = raw_key;
