@@ -10,14 +10,16 @@
 // For now this is going to be the only editor, but in the future this will be used as an editor "panel"
 // where multiple panels can be side by side.
 typedef struct {
+    String* file_path;
+    FILE* file_context;
     bool open;
     Cursor cursor;
     int scroll_y, scroll_x;
-    String* file_path;
     List* /*String*/ lines;
 } Editor;
 
 Editor* editor_init();
+bool editor_load_file(Editor* editor, char* file_name);
 
 void editor_display(Editor* editor);
 void editor_get_input(Editor* editor);

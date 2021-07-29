@@ -9,20 +9,29 @@
 #include "../terminal/terminal.h"
 #include "../terminal/input.h"
 
-Editor* editor_init(char* file_path) {
+Editor* editor_init() {
     Editor* editor = malloc(sizeof(Editor));
     editor->open = true;
     editor->cursor = cursor_init();
-    editor->file_path = string_init(file_path);
+//    editor->file_path = string_init(file_path);
     editor->lines = list_init();
     editor->scroll_y = editor->scroll_x = 0;
-    // We don't care if the file path isn't null since I haven't implemented file loading yet...
-    for(int i = 0; i < 10; i++) {
-        list_push(editor->lines, string_init("Sample Text! Manipulate me!"));
-    }
-
 
     return editor;
+}
+
+bool editor_load_file(Editor* editor, char* file_name) {
+    FILE* file = fopen(file_name, "r");
+    if(file == NULL) {
+        return false;
+    }
+
+    while(fgetc()) {
+
+    }
+
+    editor->file_path = string_init(file_name);
+    editor->file_context = file;
 }
 
 void editor_display(Editor* editor) {
@@ -157,6 +166,7 @@ void editor_close(Editor* editor) {
 void editor_free(Editor* editor) {
     list_clear_free(editor->lines, (void*) string_free);
     string_free(editor->file_path);
+    fclose(editor->file_context);
     list_free(editor->lines);
     free(editor);
 }
